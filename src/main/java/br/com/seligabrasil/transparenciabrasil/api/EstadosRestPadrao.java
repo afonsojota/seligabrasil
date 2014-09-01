@@ -22,7 +22,7 @@ public class EstadosRestPadrao implements EstadosRest {
 	@Override
 	public List<Estado> getEstados() {
 		String estados = rest
-				.get("/sandbox/v1/estados");
+				.get("/estados");
 		
 		Gson gson = new Gson();
 		Estado[] arrayEstados = gson.fromJson(estados, Estado[].class);

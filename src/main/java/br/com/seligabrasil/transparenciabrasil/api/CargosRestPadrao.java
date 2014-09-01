@@ -17,7 +17,7 @@ public class CargosRestPadrao implements CargosRest {
 	
 	@Override
 	public List<Cargo> getCargos() {
-		String cargosJson = rest.get("/sandbox/v1/cargos");
+		String cargosJson = rest.get("/cargos");
 		
 		Gson gson = new Gson();
 		Cargo[] cargos = gson.fromJson(cargosJson, Cargo[].class);

@@ -21,7 +21,7 @@ public class PartidosRestPadrao implements PartidosRest {
 
 	@Override
 	public List<Partido> getPartidos() {
-		String json = rest.get("/sandbox/v1/partidos");
+		String json = rest.get("/partidos");
 		
 		Gson gson = new Gson();
 		Partido[] partidosFromJson = gson.fromJson(json, Partido[].class);
