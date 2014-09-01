@@ -19,20 +19,12 @@ public class Partido {
 		this.sigla = sigla;
 	}
 
-	public Integer getId() {
+	public Integer getPartidoId() {
 		return partidoId;
-	}
-
-	public void setId(Integer id) {
-		this.partidoId = id;
 	}
 
 	public String getSigla() {
 		return sigla;
-	}
-
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
 	}
 
 }

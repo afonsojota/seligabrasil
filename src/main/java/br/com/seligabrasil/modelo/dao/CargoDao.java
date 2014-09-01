@@ -1,4 +1,4 @@
-package br.com.seligabrasil.modelo.dao.jpa;
+package br.com.seligabrasil.modelo.dao;
 
 import java.util.List;
 
