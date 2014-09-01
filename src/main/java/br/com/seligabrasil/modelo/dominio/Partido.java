@@ -1,34 +1,30 @@
 package br.com.seligabrasil.modelo.dominio;
 
-import java.util.Calendar;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Partido implements EntidadeDeCache {
-	@Id
-	private Integer id;
+public class Partido {
+	@Id @Column(name = "id")
+	private Integer partidoId;
 	private String sigla;
-	private Calendar dataCache;
 	
 	public Partido() {
 		super();
 	}
 
-	public Partido(Integer id, String sigla, Calendar dataCache) {
-		super();
-		this.id = id;
+	public Partido(Integer id, String sigla) {
+		this.partidoId = id;
 		this.sigla = sigla;
-		this.dataCache = dataCache;
 	}
 
 	public Integer getId() {
-		return id;
+		return partidoId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.partidoId = id;
 	}
 
 	public String getSigla() {
@@ -39,17 +35,4 @@ public class Partido implements EntidadeDeCache {
 		this.sigla = sigla;
 	}
 
-	public Calendar getDataCache() {
-		return dataCache;
-	}
-
-	public void setDataCache(Calendar dataCache) {
-		this.dataCache = dataCache;
-	}
-
-	@Override
-	public boolean ehValida() {
-		return ValidadeDoCache.UM_MES.ehUmaDataValida(dataCache);
-	}
-	
 }

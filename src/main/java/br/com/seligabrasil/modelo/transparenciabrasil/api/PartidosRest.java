@@ -1,5 +1,11 @@
 package br.com.seligabrasil.modelo.transparenciabrasil.api;
 
-public interface PartidosRest {
+import java.util.List;
 
+import br.com.seligabrasil.modelo.dominio.Partido;
+
+public interface PartidosRest {
+	
+	List<Partido> getPartidos();
+	
 }
