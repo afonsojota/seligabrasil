@@ -6,8 +6,8 @@ import br.com.seligabrasil.modelo.dominio.Bem;
 import br.com.seligabrasil.modelo.dominio.Candidato;
 import br.com.seligabrasil.modelo.dominio.Candidatura;
 import br.com.seligabrasil.modelo.dominio.Doacao;
-import br.com.seligabrasil.modelo.dominio.Estado;
 import br.com.seligabrasil.modelo.dominio.Estatisticas;
+import br.com.seligabrasil.transparenciabrasil.dto.FiltroPesquisaCandidato;
 
 public interface CandidatosRest {
 
@@ -17,10 +17,10 @@ public interface CandidatosRest {
 	 * Além do estado é obrigatório definir um cargo, um partido ou um nome. 
 	 * Caso essas condições não estejam satisfeitas a busca retorna uma mensagem de erro.
 	 * 
-	 * @param estado
+	 * @param filtro parametros de pesquisa
 	 * @return
 	 */
-	List<Candidato> getLista(Estado estado);
+	List<Candidato> getLista(FiltroPesquisaCandidato filtro);
 	
 	/**
 	 * Retorna informações sobre determinado candidato de acordo com o {id} passado.

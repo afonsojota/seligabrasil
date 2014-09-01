@@ -12,10 +12,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.com.seligabrasil.modelo.dominio.Candidato;
-import br.com.seligabrasil.modelo.repositorio.Candidatos;
 import br.com.seligabrasil.modelo.repositorio.Cargos;
 import br.com.seligabrasil.modelo.repositorio.Estados;
 import br.com.seligabrasil.modelo.repositorio.Partidos;
+import br.com.seligabrasil.transparenciabrasil.api.CandidatosRest;
 import br.com.seligabrasil.transparenciabrasil.dto.FiltroPesquisaCandidato;
 
 @Controller
@@ -27,7 +27,7 @@ public class IndexController {
 	
 	@Inject private Partidos partidos;
 	
-	@Inject private Candidatos candidatos;
+	@Inject private CandidatosRest candidatos;
 	
 	@Inject private Result result;
 	
@@ -44,7 +44,7 @@ public class IndexController {
 	public void pesquisar(@Valid FiltroPesquisaCandidato filtro) {
 		validator.onErrorSendBadRequest();
 		
-		List<Candidato> resultado = candidatos.pesquisar(filtro);
+		List<Candidato> resultado = candidatos.getLista(filtro);
 		
 		result.use(Results.json()).from(resultado).serialize();
 	}
