@@ -12,55 +12,73 @@
 	<h1>Candidatos</h1>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<p>
-					<label for="estado"><b>Estado:</b></label> <select id="estado"
-						name="estado">
-						<c:forEach items="${estados}" var="estado">
-							<option value="${estado.sigla}">${estado.nome}</option>
-						</c:forEach>
-					</select>
-				</p>
-	
-				<p>
-					<label for="partido">Partido:</label> <select id="partido"
-						name="partido">
-						<option value="0">Todos</option>
-						<c:forEach items="${partidos}" var="partido">
-							<option value="${partido.partidoId}">${partido.sigla}</option>
-						</c:forEach>
-					</select>
-				</p>
-	
-				<p>
-					<label for="cargo">Cargo:</label> <select id="cargo" name="cargo">
-						<option value="0">Todos</option>
-						<c:forEach items="${cargos}" var="cargo">
-							<option value="${cargo.cargoId}">${cargo.nome}</option>
-						</c:forEach>
-					</select>
-				</p>
-				
-				<p>
-					<input type="text" name="nomeCandidato" placeholder="Nome do candidato" />
-				</p>
-			</div>
+			<form id="pesquisa" method="post" action="${linkTo[IndexController].pesquisar}">
+				<div class="col-md-4">
+					<p>
+						<label for="estado"><b>Estado:</b></label> 
+						<select id="estado"
+							name="estado">
+							<c:forEach items="${estados}" var="estado">
+								<option value="${estado.sigla}">${estado.nome}</option>
+							</c:forEach>
+						</select>
+					</p>
+		
+					<p>
+						<label for="partido">Partido:</label> 
+						<select id="partido"
+							name="partido">
+							<option value="0">Todos</option>
+							<c:forEach items="${partidos}" var="partido">
+								<option value="${partido.partidoId}">${partido.sigla}</option>
+							</c:forEach>
+						</select>
+					</p>
+		
+					<p>
+						<label for="cargo">Cargo:</label> 
+						<select id="cargo" name="cargo">
+							<option value="0">Todos</option>
+							<c:forEach items="${cargos}" var="cargo">
+								<option value="${cargo.cargoId}">${cargo.nome}</option>
+							</c:forEach>
+						</select>
+					</p>
+					
+					<p>
+						<input type="text" name="nomeCandidato" placeholder="Nome do candidato" />
+					</p>
+					
+					<a id="btPesquisar" role="button" class="btn btn-primary btn-lg">Buscar</a>
+					
+				</div>
+			</form>
 			
 			<div class="col-md-8">
 				<h3>resultado da busca</h3>
 			</div> 		
 		</div>
 		
-		<div class="row">
-			<div class="col-md-3">
-				<a role="button" class="btn btn-primary btn-lg">Buscar</a>
-			</div>
-		</div>
-		
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	<script>
+		$(function() {
+			$('#btPesquisar').click(function(evt) {
+				$.post( "/seligabrasil/pesquisar", $( "#pesquisa" ).serialize(),
+						function(data) {
+							alert(data);
+						},
+						
+						function(data) {
+							alert(data);
+						}
+				);
+			});
+		});
+	</script>
 </body>
 
 </html>

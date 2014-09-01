@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import br.com.seligabrasil.modelo.dao.PartidoDAO;
+import br.com.seligabrasil.infra.dao.PartidoDAO;
 import br.com.seligabrasil.modelo.dominio.Partido;
 
 public class PartidosPadrao implements Partidos {
