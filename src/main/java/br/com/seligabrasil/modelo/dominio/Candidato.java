@@ -4,14 +4,14 @@ public class Candidato {
 	private String id;
 	private String apelido;
 	private String nome;
-	private int numero;
+	private String numero;
 	private String titulo;
 	private String CPF;
 	private String matricula;
 	private String cargo;
 	private String estado;
 	private String partido;
-	private int idade;
+	private String idade;
 	private String instrucao;
 	private String ocupacao;
 	private String miniBio;
@@ -20,7 +20,7 @@ public class Candidato {
 	private String bancadas;
 	private String processos;
 	private String casaAtual;
-	private boolean reeleicao;
+	private String reeleicao;
 	private String foto;
 	public String getId() {
 		return id;
@@ -31,7 +31,7 @@ public class Candidato {
 	public String getNome() {
 		return nome;
 	}
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 	public String getTitulo() {
@@ -52,7 +52,7 @@ public class Candidato {
 	public String getPartido() {
 		return partido;
 	}
-	public int getIdade() {
+	public String getIdade() {
 		return idade;
 	}
 	public String getInstrucao() {
@@ -79,11 +79,12 @@ public class Candidato {
 	public String getCasaAtual() {
 		return casaAtual;
 	}
-	public boolean isReeleicao() {
+	public String getReeleicao() {
 		return reeleicao;
 	}
 	public String getFoto() {
 		return foto;
 	}
+	
 	
 }

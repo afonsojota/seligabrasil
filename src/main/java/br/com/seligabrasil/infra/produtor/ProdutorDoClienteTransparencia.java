@@ -21,6 +21,9 @@ public class ProdutorDoClienteTransparencia {
 	@Inject @Property("transparencia.default.porta")
 	private String porta;
 	
+	@Inject @Property("transparencia.complemento.uri")
+	private String complementoURI;
+	
 	@Produces
 	public RestHTTPClient getRestHTTPClient() {
 		RestHTTPClient client = new RestHTTPClient(URI.create(baseURI));
@@ -29,6 +32,7 @@ public class ProdutorDoClienteTransparencia {
 		client.addHeader("Accept", "application/json");
 		
 		client.setPort(Integer.parseInt(porta));
+		client.setComplementURI(complementoURI);
 		
 		return client;
 	}

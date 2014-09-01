@@ -33,6 +33,7 @@ public class RestHTTPClient {
 	private HttpClient httpClient = new HttpClient();
 	private Set<Header> headers = new HashSet<>();
 	private Map<String, String> parameters = new HashMap<>();
+	private String complementoURI;
 	
 	public RestHTTPClient() {
 		this(null);
@@ -55,7 +56,7 @@ public class RestHTTPClient {
 	
 	public String get(String resource) {
 
-		GetMethod httpMethod = new GetMethod(baseURI + ":" + port + resource);
+		GetMethod httpMethod = new GetMethod(baseURI + ":" + port + complementoURI + resource);
 		for (Header header : headers) {
 			httpMethod.addRequestHeader(header);
 		}
@@ -97,5 +98,10 @@ public class RestHTTPClient {
 	public RestHTTPClient addParameter(String name, int value) {
 		parameters.put(name, Integer.toString(value));
 		return this;
+	}
+
+	public void setComplementURI(String complementoURI) {
+		this.complementoURI = complementoURI;
+		
 	}
 }

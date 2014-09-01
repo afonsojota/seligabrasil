@@ -45,7 +45,6 @@ public class IndexController {
 		validator.onErrorSendBadRequest();
 		
 		List<Candidato> resultado = candidatos.getLista(filtro);
-		
-		result.use(Results.json()).from(resultado).serialize();
+		result.use(Results.json()).from(resultado, "resultado").serialize();
 	}
 }

@@ -26,6 +26,13 @@ public class FiltroPesquisaCandidato {
 		cargo = request.getParameter("cargo");
 		nomeCandidato = request.getParameter("nomeCandidato");
 	
+		if ("0".equals(partido)) {
+			partido = null;
+		}
+		
+		if ("0".equals("cargo")) {
+			cargo = null;
+		}
 	}
 
 	public String getEstado() {
