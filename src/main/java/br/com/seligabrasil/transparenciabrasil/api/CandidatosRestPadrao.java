@@ -72,6 +72,9 @@ public class CandidatosRestPadrao implements CandidatosRest {
 			http.addParameter(key, parametros.get(key));
 		}
 		
+		http.addParameter("_offset", filtro.getPagina());
+		http.addParameter("_limit", 10);
+		
 		return http.get("/candidatos");
 	}
 }

@@ -6,6 +6,13 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<style>
+	.candidato {
+		display: none;
+	}
+</style>
+
 </head>
 
 <body>
@@ -49,16 +56,37 @@
 						<input type="text" name="nomeCandidato" placeholder="Nome do candidato" />
 					</p>
 					
+					<input type="hidden" name="pagina" id="pagina" value="1"/>
+					
 					<a id="btPesquisar" role="button" class="btn btn-primary btn-lg">Buscar</a>
 					
 				</div>
 			</form>
 			
-			<div class="col-md-8">
+			<div class="col-md-8" id="candidatos">
 				<h3>resultado da busca</h3>
+				
+				<div class="candidato row">
+					<div class="col-md-2">
+						<img class="image" />
+					</div>
+					<div class="col-md-5">
+						<label>Nome:</label>
+						<label class="nome"></label>
+					</div>
+				</div>
+				
+				<ul class="pager">
+			  		<li><a href="#" id="prev">Previous</a></li>
+			  		<li><a href="#" id="next">Next</a></li>
+				</ul>
+				
 			</div> 		
 		</div>
 		
+		<div class="row">
+		
+		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -66,17 +94,50 @@
 	
 	<script>
 		$(function() {
-			$('#btPesquisar').click(function(evt) {
-				$.post( "/seligabrasil/pesquisar", $( "#pesquisa" ).serialize(),
-						function(data) {
-							alert(data);
-						},
-						
-						function(data) {
-							alert(data);
+			var form = $('#pesquisa');
+			
+			var search = function() {
+				$.ajax({
+					type: 'POST',
+					url: form.attr('action'),
+					data: form.serialize(),
+					success: function(data) {
+						if (data.resultado.length > 0) {
+							var candidatos = data.resultado;
+							$(candidatos).each(function(idx, candidato) {
+								var template = $('.candidato').clone();
+								template.removeClass('candidato');
+								template.css('display', 'block');
+								template.find('.image').attr('src', candidato.foto);
+								template.find('.nome').html(candidato.nome);
+								
+								$('#candidatos').append(template);
+							});
 						}
-				);
+					},
+					
+					error: function(data) {
+						console.log(data);						
+					}
+				});		
+			};
+
+			$('#next').click(function(evt) {
+				var page = $('#page').val();
+				$('#page').val(ParseInt(page, 10) + 1);
+				search();
 			});
+
+			$('#prev').click(function(evt) {
+				var page = $('#page').val();
+				$('#page').val(ParseInt(page, 10) - 1);
+				search();
+			});
+			
+			$('#btPesquisar').click(function(evt) {
+				search();
+			});
+			
 		});
 	</script>
 </body>

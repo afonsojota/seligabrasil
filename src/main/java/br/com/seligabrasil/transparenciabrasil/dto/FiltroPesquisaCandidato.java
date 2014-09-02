@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 
 public class FiltroPesquisaCandidato {
@@ -19,13 +20,23 @@ public class FiltroPesquisaCandidato {
 	
 	private String nomeCandidato;
 
+	private int pagina;
+	
 	public FiltroPesquisaCandidato(HttpServletRequest request) {
 		
 		estado = request.getParameter("estado");
 		partido = request.getParameter("partido");
 		cargo = request.getParameter("cargo");
 		nomeCandidato = request.getParameter("nomeCandidato");
-	
+		
+		String tempPagina = Optional.fromNullable(request.getParameter("pagina")).or("1");
+		
+		try {
+			pagina = Integer.parseInt(tempPagina);
+		} catch (NumberFormatException e) {
+			pagina = 1;
+		}
+		
 		if ("0".equals(partido)) {
 			partido = null;
 		}
@@ -51,6 +62,10 @@ public class FiltroPesquisaCandidato {
 		return nomeCandidato;
 	}
 
+	public int getPagina() {
+		return pagina;
+	}
+	
 	public Map<String, String> getParametros() {
 		Map<String, String> parametros = new HashMap<>();
 		
