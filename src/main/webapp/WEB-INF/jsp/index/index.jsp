@@ -86,6 +86,10 @@
 						</div>
 						<div class="field col-md-9">
 							<div class="field">
+								Partido:<label class="partido"></label><p/>
+							</div>
+							
+							<div class="field">
 								Nome:<label class="nome"></label><p/>
 							</div>
 							
@@ -140,6 +144,7 @@
 								template.find('.nome').html(candidato.nome);
 								template.find('.apelido').html(candidato.apelido);
 								template.find('.ocupacao').html(candidato.ocupacao);
+								template.find('.partido').html(candidato.partido);
 								template.find('.processos').html(candidato.processos);
 								
 								$('.candidatos').append(template);
