@@ -41,7 +41,7 @@ public class FiltroPesquisaCandidato {
 			partido = null;
 		}
 		
-		if ("0".equals("cargo")) {
+		if ("0".equals(cargo)) {
 			cargo = null;
 		}
 	}
@@ -80,7 +80,7 @@ public class FiltroPesquisaCandidato {
 		}
 		
 		if (!Strings.isNullOrEmpty(nomeCandidato)) {
-			parametros.put("nomeCandidato", nomeCandidato);
+			parametros.put("nome", nomeCandidato);
 		}
 		
 		return parametros;

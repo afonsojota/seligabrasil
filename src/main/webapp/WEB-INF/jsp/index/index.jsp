@@ -8,8 +8,23 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
 <style>
-	.candidato {
+	.template {
 		display: none;
+	}
+
+	.candidato {
+		margin-bottom: 10px;
+		padding: 5px;
+		width: inherit;
+		background-color: #FEFFE0;
+	}
+		
+	.field {
+		white-space: nowrap;
+	}
+	
+	.field-normal {
+		white-space: normal;
 	}
 </style>
 
@@ -19,8 +34,8 @@
 	<h1>Candidatos</h1>
 	<div class="container">
 		<div class="row">
-			<form id="pesquisa" method="post" action="${linkTo[IndexController].pesquisar}">
-				<div class="col-md-4">
+			<div class="col-md-4">
+				<form id="pesquisa" method="post" action="${linkTo[IndexController].pesquisar}">
 					<p>
 						<label for="estado"><b>Estado:</b></label> 
 						<select id="estado"
@@ -56,23 +71,36 @@
 						<input type="text" name="nomeCandidato" placeholder="Nome do candidato" />
 					</p>
 					
-					<input type="hidden" name="pagina" id="pagina" value="1"/>
+					<input type="hidden" name="pagina" id="pagina" value="0"/>
 					
 					<a id="btPesquisar" role="button" class="btn btn-primary btn-lg">Buscar</a>
 					
-				</div>
-			</form>
+				</form>
+			</div>
 			
-			<div class="col-md-8" id="candidatos">
-				<h3>resultado da busca</h3>
-				
-				<div class="candidato row">
-					<div class="col-md-2">
-						<img class="image" />
-					</div>
-					<div class="col-md-5">
-						<label>Nome:</label>
-						<label class="nome"></label>
+			<div class="col-md-8" id="painel">
+				<div class="candidatos">
+					<div class="template row">
+						<div class="col-md-2">
+							<img width="70%" class="image" />
+						</div>
+						<div class="field col-md-9">
+							<div class="field">
+								Nome:<label class="nome"></label><p/>
+							</div>
+							
+							<div class="field">
+								Apelido:<label class="apelido"></label><p/>
+							</div>
+							
+							<div class="field">
+								Ocupação:<label class="ocupacao"></label><p/>
+							</div>
+							
+							<div class="field-normal">
+								Processos:<label class="processos"></label><p/>
+							</div>
+						</div>
 					</div>
 				</div>
 				
@@ -80,13 +108,10 @@
 			  		<li><a href="#" id="prev">Previous</a></li>
 			  		<li><a href="#" id="next">Next</a></li>
 				</ul>
-				
-			</div> 		
+			</div>
+			 		
 		</div>
 		
-		<div class="row">
-		
-		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -102,39 +127,49 @@
 					url: form.attr('action'),
 					data: form.serialize(),
 					success: function(data) {
+						$('.candidatos').find('.candidato').remove();
+						
 						if (data.resultado.length > 0) {
 							var candidatos = data.resultado;
 							$(candidatos).each(function(idx, candidato) {
-								var template = $('.candidato').clone();
-								template.removeClass('candidato');
+								var template = $('.template').clone();
+								template.removeClass('template');
+								template.addClass('candidato');
 								template.css('display', 'block');
 								template.find('.image').attr('src', candidato.foto);
 								template.find('.nome').html(candidato.nome);
+								template.find('.apelido').html(candidato.apelido);
+								template.find('.ocupacao').html(candidato.ocupacao);
+								template.find('.processos').html(candidato.processos);
 								
-								$('#candidatos').append(template);
+								$('.candidatos').append(template);
 							});
 						}
 					},
 					
-					error: function(data) {
-						console.log(data);						
+					statusCode: 
+					{
+						400: function(data) {
+							alert(/.*?<body>(.*?)<\/body>.*/g.exec(data.responseText)[1]);
+						}
 					}
 				});		
 			};
 
 			$('#next').click(function(evt) {
-				var page = $('#page').val();
-				$('#page').val(ParseInt(page, 10) + 1);
+				var page = $('#pagina').val();
+				$('#pagina').val(parseInt(page, 10) + 1);
 				search();
 			});
 
 			$('#prev').click(function(evt) {
-				var page = $('#page').val();
-				$('#page').val(ParseInt(page, 10) - 1);
+				var page = $('#pagina').val();
+				$('#pagina').val(parseInt(page, 10) - 1);
 				search();
 			});
 			
 			$('#btPesquisar').click(function(evt) {
+				$('#pagina').val(0);
 				search();
 			});
 			

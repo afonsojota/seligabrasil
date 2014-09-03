@@ -17,6 +17,7 @@ import br.com.seligabrasil.modelo.repositorio.Estados;
 import br.com.seligabrasil.modelo.repositorio.Partidos;
 import br.com.seligabrasil.transparenciabrasil.api.CandidatosRest;
 import br.com.seligabrasil.transparenciabrasil.dto.FiltroPesquisaCandidato;
+import br.com.seligabrasil.transparenciabrasil.exception.RespostaIncompativel;
 
 @Controller
 public class IndexController {
@@ -44,7 +45,17 @@ public class IndexController {
 	public void pesquisar(@Valid FiltroPesquisaCandidato filtro) {
 		validator.onErrorSendBadRequest();
 		
-		List<Candidato> resultado = candidatos.getLista(filtro);
-		result.use(Results.json()).from(resultado, "resultado").serialize();
+		try {
+			
+			List<Candidato> resultado = candidatos.getLista(filtro);
+			result.use(Results.json()).from(resultado, "resultado").serialize();
+			
+		} catch (RespostaIncompativel e) {
+			
+			result.use(Results.status()).badRequest(
+				e.getMensagemDoProvedor().get().getMessage());
+			
+		}
+		
 	}
 }

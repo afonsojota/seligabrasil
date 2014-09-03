@@ -13,8 +13,11 @@ import br.com.seligabrasil.modelo.dominio.Candidatura;
 import br.com.seligabrasil.modelo.dominio.Doacao;
 import br.com.seligabrasil.modelo.dominio.Estatisticas;
 import br.com.seligabrasil.transparenciabrasil.dto.FiltroPesquisaCandidato;
+import br.com.seligabrasil.transparenciabrasil.exception.RespostaIncompativel;
 
+import com.google.common.base.Optional;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class CandidatosRestPadrao implements CandidatosRest {
 	
@@ -26,13 +29,18 @@ public class CandidatosRestPadrao implements CandidatosRest {
 	}
 
 	@Override
-	public List<Candidato> getLista(FiltroPesquisaCandidato filtro) {
+	public List<Candidato> getLista(FiltroPesquisaCandidato filtro) throws RespostaIncompativel {
 		String candidatosJson = getCandidatosJson(filtro);
 		
-		Gson gson = new Gson();
-		Candidato[] candidatos = gson.fromJson(candidatosJson, Candidato[].class);
+		try { 
+			Gson gson = new Gson();
+			Candidato[] candidatos = gson.fromJson(candidatosJson, Candidato[].class);
+			return Arrays.asList(candidatos);
+			
+		} catch (JsonSyntaxException e) {
+			throw new RespostaIncompativel(e, Optional.of(candidatosJson));
+		}
 		
-		return Arrays.asList(candidatos);
 	}
 
 	@Override
@@ -72,8 +80,8 @@ public class CandidatosRestPadrao implements CandidatosRest {
 			http.addParameter(key, parametros.get(key));
 		}
 		
-		http.addParameter("_offset", filtro.getPagina());
-		http.addParameter("_limit", 10);
+		http.addParameter("_offset", filtro.getPagina() * 5);
+		http.addParameter("_limit", 5);
 		
 		return http.get("/candidatos");
 	}
